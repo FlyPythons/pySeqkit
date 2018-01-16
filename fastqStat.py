@@ -86,19 +86,20 @@ def fofn2list(fofn):
     return r
 
 
-def fastqStat(filename, fofn=False, concurrent=1):
+def fastqStat(filenames, fofn=False, concurrent=1):
     """
     statistics on fastq files
-    :param filename:
+    :param filenames:
     :param fofn: a file contain fastq file list
     :param concurrent: concurrent process to read fastq files
     :return:
     """
     # 1. get the lengths of each fastq file
-    file_list = [filename]
+    file_list = filenames
 
     if fofn:
-        file_list = fofn2list(filename)
+        for f in filenames:
+            file_list += fofn2list(f)
 
     pool = Pool(processes=concurrent)
     results = pool.map(get_length, file_list)
@@ -166,9 +167,8 @@ author:  fanjunpeng (jpfan@whu.edu.cn)
 version: v0.1
         """)
 
-    group = args.add_mutually_exclusive_group(required=True)
-    group.add_argument("-i", "--input", metavar='FASTQs', nargs="+", help="fastq files")
-    group.add_argument("-f", "--fofn", help="file contains path of fastq files")
+    args.add_argument("input", metavar='FILEs', nargs="+", help="file paths, '*' is accepted")
+    args.add_argument("-f", "--fofn", action="store_true", help="input file contains file paths")
     args.add_argument("-c", "--concurrent", metavar='INT', type=int, default=1, help="number of concurrent process")
 
     return args.parse_args()
