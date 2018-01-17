@@ -5,11 +5,12 @@ import os
 def test_fasta():
     fasta_record = """\
 >test1 this is a test1
-aaggccttss
+aaggcctt
+aaggcctt
 >test2 this is a test2
-aaggccttss
+aaggcctt
 >test3 this is a test3
-aaggccttss
+aaggcctt
 """
 
     with open("test.fasta", "w") as out:

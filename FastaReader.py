@@ -16,6 +16,9 @@ def split_header(name):
     """
     parts = name.split(None, 1)
 
+    if len(parts) == 1:
+        parts.append("")
+
     return parts
 
 
