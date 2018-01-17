@@ -14,7 +14,7 @@ def split_header(name):
     :param name:
     :return:
     """
-    parts = name.split(maxsplit=1)
+    parts = name.split(None, 1)
 
     return parts
 
