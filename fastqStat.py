@@ -164,7 +164,7 @@ description:
     Statistics on fastq files
 
 author:  fanjunpeng (jpfan@whu.edu.cn)
-version: v0.1
+version: v1.0
         """)
 
     args.add_argument("input", metavar='FILEs', nargs="+", help="file paths, '*' is accepted")

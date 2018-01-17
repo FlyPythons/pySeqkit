@@ -1,8 +1,9 @@
 """
 A module to read fasta files
 Copyright@fanjunpeng (jpfan@whu.edu.cn)
-Last modified: 2018/1/15 by fan junpeng
+
 2018/1/15 init by fanjunpeng
+2018/1/17 fix bug in split_header() by fanjunpeng
 """
 import gzip
 from os.path import abspath, expanduser, splitext
