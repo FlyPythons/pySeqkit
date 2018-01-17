@@ -189,7 +189,6 @@ description:
     Split fasta files into sub files by accumulated sequence length or number
 
 author:  fanjunpeng (jpfan@whu.edu.cn)
-version: v1.0
     """)
 
     args.add_argument("input", metavar="FASTAs", nargs="+", help="fasta files")

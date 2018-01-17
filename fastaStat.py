@@ -8,7 +8,6 @@ copyright@fanjunpeng (jpfan@whu.edu.cn)
 """
 import argparse
 from multiprocessing import Pool
-import os.path
 
 from FastaReader import open_fasta
 
@@ -164,7 +163,6 @@ description:
     Statistics on fasta files
 
 author:  fanjunpeng (jpfan@whu.edu.cn)
-version: v1.0
         """)
 
     args.add_argument("input", metavar='FILEs', nargs="+", help="file paths, '*' is accepted")
