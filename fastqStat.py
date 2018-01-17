@@ -113,7 +113,7 @@ def fastqStat(filenames, fofn=False, concurrent=1):
 
     # write lengths out
     lengths = sorted(lengths, reverse=True)
-    with open("%s.len" % os.path.basename(filename), "w") as fh:
+    with open("fastq.len", "w") as fh:
         fh.write("\n".join(map(str, lengths)))
 
     # 2. get the common statistics

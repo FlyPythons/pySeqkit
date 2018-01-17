@@ -154,13 +154,13 @@ def fastaSplit(filenames, mode, num, output_dir, concurrent=1, max_split=1000):
 
     # avoid rerun
     if os.path.exists(done):
-        LOG.info("%r exists, pass this step; if you want to rerun, delete the file" % done)
+        print("%r exists, pass this step; if you want to rerun, delete the file" % done)
         return fofn2list(split_list)
 
     # for multiprocessing
     pool = Pool(processes=concurrent)
     results = []
-
+    print("Split '{filenames}' by sequence {mode} =~ {num} per file".format(**locals()))
     if mode == "number":
         for f in filenames:
             results.append(pool.apply_async(split_by_number, (f, num, output_dir, max_split)))
@@ -196,7 +196,7 @@ version: v1.0
     args.add_argument("-m", "--mode", choices=["number", "length"], default="length", help="split by number or length")
     args.add_argument("-n", "--number", type=int, metavar="INT", help="the value of mode")
     args.add_argument("-o", "--output_dir", default="split", metavar="DIR", help="output directory")
-    args.add_argument("-ms" "--max_split", type=int, default=1000, metavar="INT", help="the max number of sub files")
+    args.add_argument("-ms", "--max_split", type=int, default=1000, metavar="INT", help="the max number of sub files")
     args.add_argument("-c", "--concurrent", type=int, default=1, metavar="INT", help="number of concurrent process")
     return args.parse_args()
 
