@@ -44,12 +44,12 @@ split by sequences number == {max number} per file
 output files in 'split' directory
 ```commandline
 fastaSplit.py -m number -n {max number} -o split in.fa
-fastqStat.py -m number -n {max number} -o split in.fq
+fastqSplit.py -m number -n {max number} -o split in.fq
 ```
 split by sequences length ~= {max length} per file  
 output files in 'split' directory
 for multi FASTA/Q files
 ```commandline
 fastaSplit.py -m length -n {max length} -o split in.fa
-fastqStat.py -m length -n {max length} -o split in.fq
+fastqSplit.py -m length -n {max length} -o split in.fq
 ```
