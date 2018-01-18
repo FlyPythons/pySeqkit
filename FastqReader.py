@@ -78,9 +78,15 @@ def check_format(filename):
     :return:
     """
     allowed_format = [".fq", ".fastq", ".fq.gz", ".fastq.gz"]
-    file_format = splitext(filename)[1]
+    status = 0
 
-    if file_format not in allowed_format:
+    for f in allowed_format:
+
+        if filename.endswith(f):
+            status = 1
+            break
+
+    if status == 0:
         msg = "file format %r is not in %s" % (file_format, allowed_format)
         raise Exception(msg)
 
