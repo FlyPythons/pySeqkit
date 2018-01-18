@@ -87,7 +87,7 @@ def check_format(filename):
             break
 
     if status == 0:
-        msg = "file format %r is not in %s" % (file_format, allowed_format)
+        msg = "file format is not in %s" % allowed_format
         raise Exception(msg)
 
 
