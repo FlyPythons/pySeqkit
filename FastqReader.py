@@ -56,6 +56,15 @@ class FastqRecord(object):
     def length(self):
         return len(self._seq)
 
+    def trim(self, left, right):
+        """
+        return a trimmed fastq record
+        :param left: the number of bases to be trimmed on left
+        :param right: the number of bases to be trimmed on ringht
+        :return:
+        """
+        return FastqRecord(self._description, self.seq[left:-right], self._desc2, self.quality[left:-right])
+
     @classmethod
     def from_string(cls, string):
         string = string.strip()
@@ -78,15 +87,10 @@ def check_format(filename):
     :return:
     """
     allowed_format = [".fq", ".fastq", ".fq.gz", ".fastq.gz"]
-    status = 0
 
-    for f in allowed_format:
-
-        if filename.endswith(f):
-            status = 1
-            break
-
-    if status == 0:
+    if any([f for f in allowed_format if filename.endswith(f)]):
+        return 0
+    else:
         msg = "file format is not in %s" % allowed_format
         raise Exception(msg)
 

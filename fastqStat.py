@@ -8,7 +8,6 @@ copyright@fanjunpeng (jpfan@whu.edu.cn)
 """
 import argparse
 from multiprocessing import Pool
-import os.path
 
 from FastqReader import open_fastq
 
@@ -21,6 +20,7 @@ def get_length(filename):
     """
     r = []
 
+    print("processing %r" % filename)
     for record in open_fastq(filename):
         r.append(record.length)
 

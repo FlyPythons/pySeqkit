@@ -20,6 +20,7 @@ def get_length(filename):
     """
     r = []
 
+    print("processing %r" % filename)
     for record in open_fasta(filename):
         r.append(record.length)
 

@@ -111,15 +111,10 @@ def check_format(filename):
     :return:
     """
     allowed_format = [".fa", ".fasta", ".fa.gz", ".fasta.gz"]
-    status = 0
 
-    for f in allowed_format:
-
-        if filename.endswith(f):
-            status = 1
-            break
-
-    if status == 0:
+    if any([f for f in allowed_format if filename.endswith(f)]):
+        return 0
+    else:
         msg = "file format is not in %s" % allowed_format
         raise Exception(msg)
 
