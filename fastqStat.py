@@ -95,11 +95,12 @@ def fastqStat(filenames, fofn=False, concurrent=1):
     :return:
     """
     # 1. get the lengths of each fastq file
-    file_list = filenames
-
     if fofn:
+        file_list = []
         for f in filenames:
             file_list += fofn2list(f)
+    else:
+        file_list = filenames
 
     pool = Pool(processes=concurrent)
     results = pool.map(get_length, file_list)
@@ -113,8 +114,6 @@ def fastqStat(filenames, fofn=False, concurrent=1):
 
     # write lengths out
     lengths = sorted(lengths, reverse=True)
-    with open("fastq.len", "w") as fh:
-        fh.write("\n".join(map(str, lengths)))
 
     # 2. get the common statistics
     total_length = sum(lengths)
@@ -151,6 +150,10 @@ longest read length:\t{longest}
                                            "{0:,}".format(read_length_sum),
                                            "{0:,}".format(read_number),
                                            100.0*read_length_sum/total_length))
+
+    # write out reads length for plot
+    with open("fastq.len", "w") as fh:
+        fh.write("\n".join(map(str, lengths)))
 
 
 def get_args():
