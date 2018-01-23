@@ -86,7 +86,7 @@ def fofn2list(fofn):
     return r
 
 
-def fastqStat(filenames, fofn=False, concurrent=1):
+def fastqStat(filenames, ngs=False, fofn=False, concurrent=1):
     """
     statistics on fastq files
     :param filenames:
@@ -136,6 +136,10 @@ longest read length:\t{longest}
 
     # 2. get the N10-N90 statstics
     # length: the N{i} value; number: number of reads which length >= N{i}
+    # if the input file is ngs short reads, skip the following steps.
+    if ngs:
+        return 1
+
     print("Distribution of read length")
     print("%5s\t%15s\t%15s\t%10s" % ("Type", "Bases", "Count", "%Bases"))
     for i in [10, 20, 30, 40, 50, 60, 70, 80, 90]:
@@ -172,6 +176,7 @@ author:  fanjunpeng (jpfan@whu.edu.cn)
         """)
 
     args.add_argument("input", metavar='FILEs', nargs="+", help="file paths, '*' is accepted")
+    args.add_argument("-ngs", action="store_true", help="input fastq reads is short reads from ngs")
     args.add_argument("-f", "--fofn", action="store_true", help="input file contains file paths")
     args.add_argument("-c", "--concurrent", metavar='INT', type=int, default=1, help="number of concurrent process")
 
@@ -180,7 +185,7 @@ author:  fanjunpeng (jpfan@whu.edu.cn)
 
 def main():
     args = get_args()
-    fastqStat(args.input, args.fofn, args.concurrent)
+    fastqStat(args.input, args.ngs, ngsargs.fofn, args.concurrent)
 
 
 if __name__ == "__main__":
