@@ -38,6 +38,10 @@ for one file contains FASTA/Q file paths
 fastaStat.py -f in.fofn > in.fa.stat
 fastqStat.py -f in.fofn > in.fq.stat
 ```
+for *NGS short reads*, you'd better turn on *'-ngs'* to avoid out of memory 
+```commandline
+fastqStat.py -ngs -c 10 *.R1.fq *.R2.fq
+```
 * Split large sequences file in FASTA/Q format into small files:
 
 split by sequences number == {max number} per file  
