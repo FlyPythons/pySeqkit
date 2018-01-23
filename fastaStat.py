@@ -115,10 +115,10 @@ def fastaStat(filenames, fofn=False, concurrent=1):
     # write lengths out
     lengths = sorted(lengths, reverse=True)
 
-
     # 2. get the common statistics
     total_length = sum(lengths)
     reads_number = len(lengths)
+    file_num = "{0:,}".format(len(file_list))
     average_length = "{0:,}".format(int(total_length / reads_number))
     longest = "{0:,}".format(lengths[0])
     _total_length = "{0:,}".format(total_length)
@@ -126,8 +126,9 @@ def fastaStat(filenames, fofn=False, concurrent=1):
 
     print("""\
 Statistics for all fasta reads
+file number:          \t{file_num}
 
-contig number:       \t{reads_number}
+contig number:        \t{reads_number}
 sum of contig length: \t{_total_length}
 contig average length:\t{average_length}
 longest contig length:\t{longest}

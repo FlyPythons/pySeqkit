@@ -118,6 +118,7 @@ def fastqStat(filenames, fofn=False, concurrent=1):
     # 2. get the common statistics
     total_length = sum(lengths)
     reads_number = len(lengths)
+    file_num = "{0:,}".format(len(file_list))
     average_length = "{0:,}".format(int(total_length / reads_number))
     longest = "{0:,}".format(lengths[0])
     _total_length = "{0:,}".format(total_length)
@@ -126,6 +127,7 @@ def fastqStat(filenames, fofn=False, concurrent=1):
     print("""\
 Statistics for all fastq reads
 
+file number:        \t{file_num}
 reads number:       \t{reads_number}
 sum of read length: \t{_total_length}
 read average length:\t{average_length}
