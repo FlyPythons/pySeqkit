@@ -20,7 +20,8 @@ def get_length(filename):
     """
     r = []
 
-    print("processing %r" % filename)
+    print("[%s] processing %r" % (index, filename))
+    
     for record in open_fasta(filename):
         r.append(record.length)
 
@@ -103,7 +104,13 @@ def fastaStat(filenames, fofn=False, concurrent=1):
         file_list = filenames
 
     pool = Pool(processes=concurrent)
-    results = pool.map(get_length, file_list)
+    results = []
+
+    for i in range(len(file_list)):
+        filename = file_list[i]
+        index = "%s/%s" % (i+1, len(file_list))
+        results.append(pool.apply_async(get_length, (filename, index)))
+
     pool.close()
     pool.join()
 

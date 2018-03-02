@@ -12,7 +12,7 @@ from multiprocessing import Pool
 from FastqReader import open_fastq
 
 
-def get_length(filename):
+def get_length(filename, index):
     """
     get the length of record
     :param filename:
@@ -20,7 +20,8 @@ def get_length(filename):
     """
     r = []
 
-    print("processing %r" % filename)
+    print("[%s] process %r" % (index, filename))
+
     for record in open_fastq(filename):
         r.append(record.length)
 
@@ -103,14 +104,20 @@ def fastqStat(filenames, ngs=False, fofn=False, concurrent=1):
         file_list = filenames
 
     pool = Pool(processes=concurrent)
-    results = pool.map(get_length, file_list)
+    results = []
+
+    for i in range(len(file_list)):
+        filename = file_list[i]
+        index = "%s/%s" % (i+1, len(file_list))
+        results.append(pool.apply_async(get_length, (filename, index)))
+
     pool.close()
     pool.join()
 
     lengths = []
 
     for r in results:
-        lengths += r
+        lengths += r.get()
 
     # write lengths out
     lengths = sorted(lengths, reverse=True)
@@ -185,7 +192,7 @@ author:  fanjunpeng (jpfan@whu.edu.cn)
 
 def main():
     args = get_args()
-    fastqStat(args.input, args.ngs, ngsargs.fofn, args.concurrent)
+    fastqStat(args.input, args.ngs, args.fofn, args.concurrent)
 
 
 if __name__ == "__main__":
