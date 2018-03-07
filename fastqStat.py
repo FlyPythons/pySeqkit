@@ -116,8 +116,9 @@ def fastqStat(filenames, ngs=False, fofn=False, concurrent=1):
 
     lengths = []
 
-    for r in results:
-        lengths += r.get()
+    for i in results:
+        print("[%s/%s] getting results of %r" % (i+1, len(results), file_list[i]))
+        lengths += results[i].get()
 
     # write lengths out
     lengths = sorted(lengths, reverse=True)

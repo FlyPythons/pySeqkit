@@ -147,6 +147,7 @@ def fastaSplit(filenames, mode, num, output_dir, concurrent=1, max_split=1000):
     :return: 
     """
     assert mode in ["number", "length"]
+    num = int(num)
 
     output_dir = mkdir(output_dir)
     split_list = os.path.join(output_dir, "split_list")

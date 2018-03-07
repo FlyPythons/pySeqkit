@@ -12,7 +12,7 @@ from multiprocessing import Pool
 from FastaReader import open_fasta
 
 
-def get_length(filename):
+def get_length(filename, index):
     """
     get the length of record
     :param filename:
@@ -21,7 +21,7 @@ def get_length(filename):
     r = []
 
     print("[%s] processing %r" % (index, filename))
-    
+
     for record in open_fasta(filename):
         r.append(record.length)
 
