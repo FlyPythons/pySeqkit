@@ -1,10 +1,8 @@
 """
 A module to read fasta files
 Copyright@fanjunpeng (jpfan@whu.edu.cn)
-
-2018/1/15 init by fanjunpeng
-2018/1/17 fix bug in split_header() by fanjunpeng
 """
+
 import gzip
 from os.path import abspath, expanduser, splitext
 
@@ -111,12 +109,6 @@ def check_format(filename):
     :return:
     """
     allowed_format = [".fa", ".fasta", ".fa.gz", ".fasta.gz"]
-
-    if any([f for f in allowed_format if filename.endswith(f)]):
-        return 0
-    else:
-        msg = "file format is not in %s" % allowed_format
-        raise Exception(msg)
 
 
 def yield_fasta_records(stream):

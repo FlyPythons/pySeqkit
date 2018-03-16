@@ -1,9 +1,6 @@
 """
 A module to read fastq files
 Copyright@fanjunpeng (jpfan@whu.edu.cn)
-Last modified: 2018/1/12 by fan junpeng
-2018/1/12 init by fanjunpeng
-2018/1/13 add support for .gz
 """
 import gzip
 from os.path import abspath, expanduser, splitext
