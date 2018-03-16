@@ -18,30 +18,27 @@ if the error is raised, install is ok.
 ## 2. Example
 * Get sequences distribution in FASTA/Q format:
 
-for one FASTA/Q file
+for FASTA/Q files, different formatted files can be stat together
+
 ```commandline
-fastaStat.py in.fa > in.fa.stat
-fastqStat.py in.fq > in.fq.stat
+Seqstat.py 1.fq *.fa > in.stat
 ```
-for multi FASTA/Q files
-```commandline
-fastaStat.py 1.fa 2.fa *.fa > in.fa.stat
-fastqStat.py 1.fq 2.fq *.fq > in.fq.stat
-```
+
 use '-c' to speed up the process
 ```commandline
-fastaStat.py -c 10 1.fa 2.fa *.fa > in.fa.stat
-fastqStat.py -c 10 1.fq 2.fq *.fq > in.fq.stat
+Seqstat.py -c 10 1.fq *.fa > in.stat
 ```
+
 for one file contains FASTA/Q file paths
 ```commandline
-fastaStat.py -f in.fofn > in.fa.stat
-fastqStat.py -f in.fofn > in.fq.stat
+Seqstat.py -f -c 10 in.fofn > in.stat
 ```
-for *NGS short reads*, you'd better turn on *'-ngs'* to avoid out of memory 
+
+for *NGS short reads*, you'd better turn on *'-ngs'* to avoid meaningless stat
 ```commandline
-fastqStat.py -ngs -c 10 *.R1.fq *.R2.fq
+Seqstat.py -ngs -c 10 *.R1.fq *.R2.fq
 ```
+
 * Split large sequences file in FASTA/Q format into small files:
 
 split by sequences number == {max number} per file  

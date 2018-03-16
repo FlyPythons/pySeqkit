@@ -16,7 +16,7 @@ aaggcctt
     with open("test.fasta", "w") as out:
         out.write(fasta_record)
 
-    os.system("python ../fastaStat.py test.fasta")
+    os.system("python ../SeqStat.py test.fasta")
     os.system("python ../fastaSplit.py -m length -n 1 -o fasta test.fasta")
 
 
@@ -40,7 +40,7 @@ def test_fastq():
     with open("test.fastq", "w") as out:
         out.write(fastq_record)
 
-    os.system("python ../fastqStat.py test.fastq")
+    os.system("python ../Seqstat.py test.fastq")
     os.system("python ../fastqSplit.py -m length -n 1 -o fastq test.fastq")
 
 
