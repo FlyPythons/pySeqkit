@@ -8,7 +8,7 @@ git clone https://github.com/FlyPythons/pySeqkit.git
 export PATH=/your install path/pySeqkit/:$PATH
 chmod 755 *.py
 ```
-* This toolkit has been tested in **python2.7** and **python3.5**
+* This toolkit has been tested in **python2.7** 
 * To test the toolkit, you can
 ```commandline
 cd test

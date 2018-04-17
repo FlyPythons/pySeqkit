@@ -52,16 +52,17 @@ def split_fasta(filename, mode, number, output_dir="split", max_split=1000):
         count = 0
 
         while count < number:
-            record = records.next()
 
-            if record:
-                out.write(str(record)+"\n")
-                if mode == "length":
-                    count += record.length
-                else:
-                    count += 1
-            else:
+            try:
+                record = records.next()
+            except:
                 break
+
+            out.write(str(record)+"\n")
+            if mode == "length":
+                count += record.length
+            else:
+                count += 1
 
         out.close()
         r.append(out_filename)
