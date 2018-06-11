@@ -1,10 +1,6 @@
-"""
-A module to read fasta files
-Copyright@fanjunpeng (jpfan@whu.edu.cn)
-"""
 
 import gzip
-from os.path import abspath, expanduser, splitext
+import os.path
 
 
 def split_header(name):
@@ -69,13 +65,6 @@ class FastaRecord(object):
         """
         return self._seq
 
-    @property
-    def length(self):
-        """
-        the length of the seq
-        """
-        return len(self._seq)
-
     @classmethod
     def from_string(cls, string):
         """
@@ -101,6 +90,13 @@ class FastaRecord(object):
         """
         return ">%s\n%s" % (self.name, self.seq)
 
+    def __len__(self):
+        """
+
+        :return:
+        """
+        return len(self.seq)
+
 
 def check_format(filename):
     """
@@ -109,6 +105,12 @@ def check_format(filename):
     :return:
     """
     allowed_format = [".fa", ".fasta", ".fa.gz", ".fasta.gz"]
+
+    if any([f for f in allowed_format if filename.endswith(f)]):
+        return 0
+    else:
+        msg = "file format is not in %s" % allowed_format
+        raise Exception(msg)
 
 
 def yield_fasta_records(stream):
@@ -142,7 +144,7 @@ def open_fasta(filename):
     :return:
     """
     check_format(filename)
-    filename = abspath(expanduser(filename))
+    filename = os.path.abspath(filename)
     mode = 'r'
 
     if filename.endswith(".gz"):
