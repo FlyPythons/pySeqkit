@@ -1,9 +1,6 @@
-"""
-A module to read fastq files
-Copyright@fanjunpeng (jpfan@whu.edu.cn)
-"""
+
 import gzip
-from os.path import abspath, expanduser, splitext
+import os.path
 
 
 class FastqRecord(object):
@@ -49,10 +46,6 @@ class FastqRecord(object):
         """
         return self._quality
 
-    @property
-    def length(self):
-        return len(self._seq)
-
     def trim(self, left, right):
         """
         return a trimmed fastq record
@@ -74,7 +67,10 @@ class FastqRecord(object):
         return FastqRecord(*lines)
 
     def __str__(self):
-        return "@{}\n{}\n{}\n{}".format(self.identifier, self.seq, self._desc2, self.quality)
+        return "@{}\n{}\n{}\n{}".format(self.identifier, self._seq, self._desc2, self.quality)
+
+    def __len__(self):
+        return len(self._seq)
 
 
 def check_format(filename):
@@ -112,10 +108,9 @@ def yield_fastq_records(stream):
         string += "%s\n" % line
 
         if n == 4:
+            yield FastqRecord.from_string(string)
             n = 0
-            _string = string
             string = ""
-            yield FastqRecord.from_string(_string)
 
 
 def open_fastq(filename):
@@ -126,7 +121,7 @@ def open_fastq(filename):
     """
     check_format(filename)
 
-    filename = abspath(expanduser(filename))
+    filename = os.path.abspath(filename)
     mode = 'r'
 
     if filename.endswith(".gz"):
