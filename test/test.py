@@ -41,10 +41,11 @@ def test_fastq():
         out.write(fastq_record)
 
     os.system("python ../Seqstat.py test.fastq")
-    os.system("python ../fastqSplit.py -m length -n 1 -o fastq test.fastq")
+    os.system("python ../fastqSplit.py -m number -n 2 -o fastq test.fastq")
 
 
 def main():
+
     test_fasta()
     test_fastq()
 
