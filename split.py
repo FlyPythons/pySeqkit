@@ -8,10 +8,10 @@ import logging
 from multiprocessing import Pool
 
 
-from seqkit.common import fofn2list, mkdir, touch, get_seq_format
-from seqkit.FastaReader import open_fasta
-from seqkit.FastqReader import open_fastq
-from seqkit import __author__, __version__, __email__
+from .common import fofn2list, mkdir, touch, get_seq_format
+from .FastaReader import open_fasta
+from .FastqReader import open_fastq
+from .common import __author__, __version__, __email__
 
 
 LOG = logging.getLogger(__name__)

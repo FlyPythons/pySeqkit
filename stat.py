@@ -5,10 +5,10 @@ import argparse
 import logging
 from multiprocessing import Pool
 
-from seqkit.FastqReader import open_fastq
-from seqkit.FastaReader import open_fasta
-from seqkit import __author__, __version__, __email__
-from seqkit.common import get_seq_format
+from .FastqReader import open_fastq
+from .FastaReader import open_fasta
+from .common import __author__, __version__, __email__
+from .common import get_seq_format
 
 
 LOG = logging.getLogger(__name__)

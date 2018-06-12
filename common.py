@@ -2,9 +2,12 @@
 import logging
 import os
 
-from seqkit.FastaReader import ALLOWED_FASTA
-from seqkit.FastqReader import ALLOWED_FASTQ
+from .FastaReader import ALLOWED_FASTA
+from .FastqReader import ALLOWED_FASTQ
 
+__version__ = "0.3.0"
+__author__ = ("Junpeng Fan",)
+__email__ = "jpfan@whu.edu.cn"
 
 LOG = logging.getLogger(__name__)
 
