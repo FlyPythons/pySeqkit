@@ -1,10 +1,39 @@
-from __future__ import absolute_import
 
 import logging
 import os
 
+from seqkit.FastaReader import ALLOWED_FASTA
+from seqkit.FastqReader import ALLOWED_FASTQ
+
 
 LOG = logging.getLogger(__name__)
+
+
+def get_seq_format(filename):
+    """
+
+    :param filename:
+    :return:
+    """
+
+    filename = filename.split("/")[-1]
+
+    if filename.endswith(".gz"):
+        prefix = ".".join(filename.split(".")[:-2])
+        fmt = ".".join(filename.split(".")[-2:])
+    else:
+        prefix = ".".join(filename.split(".")[:-1])
+        fmt = filename.split(".")[-1]
+
+    fmt = "." + fmt
+    if fmt.lower() in ALLOWED_FASTA:
+        fmt = "fasta"
+    elif fmt.lower() in ALLOWED_FASTQ:
+        fmt = "fastq"
+    else:
+        raise Exception("%r is not a valid seq format!" % filename)
+
+    return prefix, fmt
 
 
 def check_paths(*paths):

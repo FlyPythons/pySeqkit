@@ -1,6 +1,10 @@
 
 import gzip
+import logging
 import os.path
+
+LOG = logging.getLogger(__name__)
+ALLOWED_FASTA = [".fa", ".fasta", ".fa.gz", ".fasta.gz"]
 
 
 def split_header(name):
@@ -104,12 +108,11 @@ def check_format(filename):
     :param filename:
     :return:
     """
-    allowed_format = [".fa", ".fasta", ".fa.gz", ".fasta.gz"]
 
-    if any([f for f in allowed_format if filename.endswith(f)]):
+    if any([f for f in ALLOWED_FASTA if filename.endswith(f)]):
         return 0
     else:
-        msg = "file format is not in %s" % allowed_format
+        msg = "file format is not in %s" % ALLOWED_FASTA
         raise Exception(msg)
 
 
@@ -146,6 +149,8 @@ def open_fasta(filename):
     check_format(filename)
     filename = os.path.abspath(filename)
     mode = 'r'
+
+    LOG.info("Parse fasta sequences from %r" % filename)
 
     if filename.endswith(".gz"):
         stream = gzip.open(filename, mode)

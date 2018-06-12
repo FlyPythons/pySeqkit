@@ -1,6 +1,10 @@
 
 import gzip
+import logging
 import os.path
+
+LOG = logging.getLogger(__name__)
+ALLOWED_FASTQ = [".fq", ".fastq", ".fq.gz", ".fastq.gz"]
 
 
 class FastqRecord(object):
@@ -22,7 +26,7 @@ class FastqRecord(object):
         return self._description
 
     @property
-    def name(self):
+    def id(self):
         """
         The name of the FASTQ record, equal to the identifier
         up to the first whitespace.
@@ -79,12 +83,11 @@ def check_format(filename):
     :param filename:
     :return:
     """
-    allowed_format = [".fq", ".fastq", ".fq.gz", ".fastq.gz"]
 
-    if any([f for f in allowed_format if filename.endswith(f)]):
+    if any([f for f in ALLOWED_FASTQ if filename.endswith(f)]):
         return 0
     else:
-        msg = "file format is not in %s" % allowed_format
+        msg = "file format is not in %s" % ALLOWED_FASTQ
         raise Exception(msg)
 
 
@@ -124,6 +127,7 @@ def open_fastq(filename):
     filename = os.path.abspath(filename)
     mode = 'r'
 
+    LOG.info("Parse fastq sequences from %r" % filename)
     if filename.endswith(".gz"):
         stream = gzip.open(filename, mode)
     else:
