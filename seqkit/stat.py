@@ -189,30 +189,28 @@ longest length:\t{longest}
         fh.write("\n".join(map(str, lengths)))
 
 
-def get_args():
+def stat_args(parser):
     """
     get args
     :return:
     """
-    args = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
-                                   description="""
-Statistics on sequence files(fastA/Q)
 
-version: %s
-contact: %s <%s>\
-        """ % (__version__, " ".join(__author__), __email__))
-
-    args.add_argument("input", metavar='FILEs', nargs="+", help="files, '.gz' is accepted")
-    args.add_argument("-ngs", action="store_true", help="input fastq reads is short reads from ngs")
-    args.add_argument("-f", "--fofn", action="store_true", help="input file contains file paths")
-    args.add_argument("--min_len", type=int, metavar="INT", default=0, help="min length to statistics")
-    args.add_argument("-c", "--concurrent", metavar='INT', type=int, default=1, help="number of concurrent process")
-    args.add_argument("--ns", metavar="INT", type=int, nargs="+", default=[10, 20, 30, 40, 50, 60, 70, 80, 90],
+    parser.add_argument("input", metavar='FILEs', nargs="+", help="files, '.gz' is accepted")
+    parser.add_argument("-ngs", action="store_true", help="input fastq reads is short reads from ngs")
+    parser.add_argument("-f", "--fofn", action="store_true", help="input file contains file paths")
+    parser.add_argument("--min_len", type=int, metavar="INT", default=0, help="min length to statistics")
+    parser.add_argument("-c", "--concurrent", metavar='INT', type=int, default=1, help="number of concurrent process")
+    parser.add_argument("--ns", metavar="INT", type=int, nargs="+", default=[10, 20, 30, 40, 50, 60, 70, 80, 90],
                       help="the values of N* to show")
-    args.add_argument("--ls", metavar="INT", type=int, nargs="+", default=[1, 5, 10, 20, 30, 40, 50, 60],
+    parser.add_argument("--ls", metavar="INT", type=int, nargs="+", default=[1, 5, 10, 20, 30, 40, 50, 60],
                       help="the values of >*kb to show")
 
-    return args.parse_args()
+    return parser
+
+
+def stat(args):
+
+    seq_stat(args.input, args.ngs, args.fofn, args.concurrent, args.min_len, args.ns, args.ls)
 
 
 def main():
@@ -223,8 +221,16 @@ def main():
         format="[%(levelname)s] %(message)s"
     )
 
-    args = get_args()
-    seq_stat(args.input, args.ngs, args.fofn, args.concurrent, args.min_len, args.ns, args.ls)
+    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
+                                     description="""
+Statistics on sequence files(fastA/Q)
+
+version: %s
+contact: %s <%s>\
+""" % (__version__, " ".join(__author__), __email__))
+
+    args = stat_args(parser).parse_args()
+    stat(args)
 
 
 if __name__ == "__main__":

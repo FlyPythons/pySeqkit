@@ -161,33 +161,41 @@ def seq_split(filenames, mode, num, output_dir, concurrent=1):
     return file_list
 
 
-def set_args():
-    args = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
-                                   description="""
-Split sequence files(fastA/Q)
+def split_args(parser):
 
-version: %s
-contact: %s <%s>\
-    """ % (__version__, " ".join(__author__), __email__))
+    parser.add_argument("seq", metavar="FILES", nargs="+", help="files, '.gz' is accepted")
+    parser.add_argument("-m", "--mode", choices=["number", "length"], required=True, help="split by number or length")
+    parser.add_argument("-n", "--number", type=int, required=True, metavar="INT", help="the value of mode")
+    parser.add_argument("-o", "--output_dir", default="split", metavar="DIR", help="output directory")
+    parser.add_argument("-c", "--concurrent", metavar='INT', type=int, default=1, help="number of concurrent process")
 
-    args.add_argument("seq", metavar="FILES", nargs="+", help="files, '.gz' is accepted")
-    args.add_argument("-m", "--mode", choices=["number", "length"], required=True, help="split by number or length")
-    args.add_argument("-n", "--number", type=int, required=True, metavar="INT", help="the value of mode")
-    args.add_argument("-o", "--output_dir", default="split", metavar="DIR", help="output directory")
-    args.add_argument("-c", "--concurrent", metavar='INT', type=int, default=1, help="number of concurrent process")
+    return parser
 
-    return args.parse_args()
+
+def split(args):
+
+    seq_split(args.seq, args.mode, args.number, args.output_dir, args.concurrent)
 
 
 def main():
+
     logging.basicConfig(
         stream=sys.stderr,
         level=logging.INFO,
         format="[%(levelname)s] %(message)s"
     )
 
-    args = set_args()
-    seq_split(args.seq, args.mode, args.number, args.output_dir, args.concurrent)
+    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
+                                   description="""
+Split sequence files(fastA/Q)
+
+version: %s
+contact: %s <%s>\
+""" % (__version__, " ".join(__author__), __email__))
+
+    parser = split_args(parser)
+    args = parser.parse_args()
+    split(args)
 
 
 if __name__ == "__main__":
